@@ -17,3 +17,12 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/login', 'App\Http\Controllers\AuthController@login');
+Route::post('/register/admin', 'App\Http\Controllers\AuthController@registerAdmin')->middleware('checkUserType:SuperAdmin');
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/register', 'App\Http\Controllers\AuthController@register')->middleware('checkUserType:Admin,SuperAdmin');
+    Route::get('/user', 'App\Http\Controllers\AuthController@user');
+    Route::post('/logout', 'App\Http\Controllers\AuthController@logout');
+});
