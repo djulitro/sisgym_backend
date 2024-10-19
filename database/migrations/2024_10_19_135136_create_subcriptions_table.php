@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('subcriptions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('subcription_duration_id')->constrained('subcription_durations');
             $table->foreignId('organization_id')->constrained('organizations');
             $table->string('name');
             $table->string('description');
-            $table->string('price');
+            $table->integer('price');
+            $table->integer('days_duration');
             $table->softDeletes();
             $table->timestamps();
         });
